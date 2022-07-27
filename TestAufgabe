@@ -55,10 +55,10 @@ namespace Aufgabe25072022
 			return isRotary;
 		}
 
-		public static int BrauchFreiPlatz(int n)
+		private static int BrauchFreiPlatz(int n)
 		{
 			int neededPlace;
-			bool richtEing2 = false;
+			bool richtEing2 ;
 			do
 			{
 				Console.Write($"Wie viel frei Platz brauchen Sie? : ");
@@ -78,7 +78,7 @@ namespace Aufgabe25072022
 			return neededPlace;
 		}
 
-		public static void ZeigAllePlatz(bool[] places)
+		private static void ZeigAllePlatz(bool[] places)
 		{
 			Console.WriteLine("Alle Plätze in Magazine\t");
 
@@ -88,27 +88,27 @@ namespace Aufgabe25072022
 			}
 		}
 
-		public static void GrossArray(out int n, out bool[] places)
+		private static void GrossArray(out int n, out bool[] places)
 		{
+
 			do
 			{
 				Console.Write("Fügen Sie bitte die Anzahl der Plätze im Magazin ein:\t");
 				Int32.TryParse(Console.ReadLine(), out n);
 			} while (n <= 0 || n > 85);
 			places = new bool[n];
-			//
 		}
 
-		public static void Wertfügen(bool[] places)
+		private static void Wertfügen(bool[] places)
 		{
 			for (int i = 0; i < places.Length; i++)
 			{
-				int k;
-				bool richtEing = false;
+				//int k;
+				bool richtEing ;
 				do
 				{
 					Console.Write($"Fügen Sie bitte die Daten für Plätze (1-FreiPlatz; 2-BelegtPlatz) {i}:");
-					Int32.TryParse(Console.ReadLine(), out k);
+					Int32.TryParse(Console.ReadLine(), out int k);
 					if (k == 1)
 					{
 						places[i] = false;
@@ -142,12 +142,14 @@ namespace Aufgabe25072022
 						findplace += 1;
 						if (findplace == neededPlace)
 						{
-							return i - neededPlace + 1; ;
+							klo = i - neededPlace + 1;
+							return klo;
 						}
 					}
 					else if (findplace != neededPlace && i == places.Length - 1)
 					{
-					  return -1;
+						klo = -1;
+					  return klo;
 					}
 					else
 					{ findplace = 0; }
@@ -185,7 +187,8 @@ namespace Aufgabe25072022
 								}
 								else
 								{
-									return -1;
+									klo = -1;
+									return klo;
 								}
 							}
 							break;
@@ -197,11 +200,13 @@ namespace Aufgabe25072022
 				incounter++;
 				if (incounter < places.Length - 1)
 				{
-					return -1;
+					klo = -1;
+					return klo;
 				}
 				//return -1;
 			}
-			return -1;
+			klo = -1;
+			return klo;
 		}
 	}
 }
