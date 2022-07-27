@@ -129,10 +129,10 @@ namespace Aufgabe25072022
 
 		public static int FindFreePlace(bool[] places, bool isRotary,int neededPlace)
 		{
-			int counter = 0;
+			
 			int klo;
 			//Linear
-			if (isRotary == false && counter != 1)// für Linear Magazine
+			if (isRotary == false )// für Linear Magazine
 			{
 				int findplace = 0;
 				for (int i = 0; i < places.Length; i++)
