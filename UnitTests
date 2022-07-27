@@ -1,0 +1,89 @@
+using Aufgabe25072022;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+
+namespace Aufgabe25072022.Tests
+{
+	[TestClass]
+	public class ProgramTests
+	{
+		[TestMethod]
+		public void isRotary_true_neededPlaces_5_returns_10()
+		{
+			//arrange
+			bool[] places =  { false, false, false, true, true, false, false, false, false, true, false, false };
+			int neededPlace = 5;
+			bool isRotary = true;
+			int expected = 10;
+			//act
+			int actual = Program.FindFreePlace( places,isRotary,neededPlace);
+			//assert
+			Assert.AreEqual(expected, actual);
+		}
+		[TestMethod]
+		public void isRotary_true_neededPlaces_4_returns_10()
+		{
+			//arrange
+			bool[] places = { false, false, false, true, true, true, false, false, false, true, false, false };
+			int neededPlace = 4;
+			bool isRotary = true;
+			int expected = 10;
+			//act
+			int actual = Program.FindFreePlace(places, isRotary, neededPlace);
+			//assert
+			Assert.AreEqual(expected, actual);
+		}
+		[TestMethod]
+		public void isRotary_false_neededPlaces_6_returns_Minus1()
+		{
+			//arrange
+			bool[] places = { false, false, false, true, true, true, false, false, false, true, false, false };
+			int neededPlace = 6;
+			bool isRotary = false;
+			int expected = -1;
+			//act
+			int actual = Program.FindFreePlace(places, isRotary, neededPlace);
+			//assert
+			Assert.AreEqual(expected, actual);
+		}
+		[TestMethod]
+		public void NewPlaces_isRotary_false_neededPlaces_6_returns_Minus1()
+		{
+			//arrange
+			bool[] places = { false, false, false, true, true, false, false, false, false, true, false, false };
+			int neededPlace = 6;
+			bool isRotary = false;
+			int expected = -1;
+			//act
+			int actual = Program.FindFreePlace(places, isRotary, neededPlace);
+			//assert
+			Assert.AreEqual(expected, actual);
+		}
+		[TestMethod]
+		public void isRotary_false_neededPlaces_4_returns_5()
+		{
+			//arrange
+			bool[] places = { false, false, false, true, true, false, false, false, false, true, false, false };
+			int neededPlace = 4;
+			bool isRotary = false;
+			int expected = 5;
+			//act
+			int actual = Program.FindFreePlace(places, isRotary, neededPlace);
+			//assert
+			Assert.AreEqual(expected, actual);
+		}
+		[TestMethod]
+		public void isRotary_false_neededPlaces_5_returns_Minus1()
+		{
+			//arrange
+			bool[] places = { false, false, false, true, true, false, false, false, false, true, false, false };
+			int neededPlace = 5;
+			bool isRotary = false;
+			int expected = -1;
+			//act
+			int actual = Program.FindFreePlace(places, isRotary, neededPlace);
+			//assert
+			Assert.AreEqual(expected, actual);
+		}
+	}
+}
