@@ -31,13 +31,17 @@ namespace Aufgabe25072022
 
 			// Wahl Art der Magazine Rotary oder Linear
 			isRotary = ArtDerMagazine(isRotary);
+			Loesung(places, neededPlace, isRotary);
 
+			Console.ReadKey();
+		}
+
+		public static void Loesung(bool[] places, int neededPlace, bool isRotary)
+		{
 			var ergebnisse = FindFreePlace(places, isRotary, neededPlace);
 			if (ergebnisse < 0)
 			{ Console.WriteLine("Leider die FreiPlätze wurde nicht gefunden"); }
 			else { Console.WriteLine($"Erste verfügbare Platz ist :{ergebnisse}"); }
-
-			Console.ReadKey();
 		}
 
 		public static bool ArtDerMagazine(bool isRotary)
@@ -129,7 +133,6 @@ namespace Aufgabe25072022
 
 		public static int FindFreePlace(bool[] places, bool isRotary,int neededPlace)
 		{
-			
 			int klo;
 			//Linear
 			if (isRotary == false )// für Linear Magazine
