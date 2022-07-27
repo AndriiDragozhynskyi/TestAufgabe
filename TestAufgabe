@@ -1,0 +1,207 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace Aufgabe25072022
+{
+	 public class Program
+	{
+		  static void Main(string[] args)
+		{
+
+			int n;
+			bool[] places;
+			int neededPlace;// wie viel Plätze brauchen
+			bool isRotary = false;// ist Magazine Rotary oder nicht
+
+			//die Größe des Arrays eingeben(Z.B.:Gross Max bis 85)
+			GrossArray(out n, out places);
+
+			//Eingabe der Sitzdaten in den Magazin(1-FreiPlatz; 2-BelegtPlatz)
+			Wertfügen(places);
+
+			//Ich zeige Frei Alle Plätze 
+			ZeigAllePlatz(places);
+
+			//Wie viel Platz ich brauche
+			neededPlace = BrauchFreiPlatz(n);
+
+			// Wahl Art der Magazine Rotary oder Linear
+			isRotary = ArtDerMagazine(isRotary);
+
+			var ergebnisse = FindFreePlace(places, isRotary, neededPlace);
+			if (ergebnisse < 0)
+			{ Console.WriteLine("Leider die FreiPlätze wurde nicht gefunden"); }
+			else { Console.WriteLine($"Erste verfügbare Platz ist :{ergebnisse}"); }
+
+			Console.ReadKey();
+		}
+
+		public static bool ArtDerMagazine(bool isRotary)
+		{
+			int wahl;
+			do
+			{
+				Console.Write($"Wählen Sie bitte Art der Magazine (1-Linear, 2-Rotary ):\t");
+				Int32.TryParse(Console.ReadLine(), out wahl);
+				if (wahl == 2)
+				{ isRotary = true; }
+				else if (wahl == 1)
+				{ isRotary = false; }
+			} while (wahl < 1 || wahl > 2);
+			return isRotary;
+		}
+
+		public static int BrauchFreiPlatz(int n)
+		{
+			int neededPlace;
+			bool richtEing2 = false;
+			do
+			{
+				Console.Write($"Wie viel frei Platz brauchen Sie? : ");
+
+				Int32.TryParse(Console.ReadLine(), out neededPlace);
+				if (neededPlace > n)
+				{
+					Console.WriteLine($"Leider gibt es nicht genug Platz\t");
+					Console.WriteLine($"Sie können wählen nur {n} Platz");
+					richtEing2 = false;
+				}
+				else
+				{
+					richtEing2 = true;
+				}
+			} while (richtEing2 == false || neededPlace == 0);
+			return neededPlace;
+		}
+
+		public static void ZeigAllePlatz(bool[] places)
+		{
+			Console.WriteLine("Alle Plätze in Magazine\t");
+
+			for (int i = 0; i < places.Length; i++)
+			{
+				Console.WriteLine($"Platz {i} enthält:" + places[i]);
+			}
+		}
+
+		public static void GrossArray(out int n, out bool[] places)
+		{
+			do
+			{
+				Console.Write("Fügen Sie bitte die Anzahl der Plätze im Magazin ein:\t");
+				Int32.TryParse(Console.ReadLine(), out n);
+			} while (n <= 0 || n > 85);
+			places = new bool[n];
+			//
+		}
+
+		public static void Wertfügen(bool[] places)
+		{
+			for (int i = 0; i < places.Length; i++)
+			{
+				int k;
+				bool richtEing = false;
+				do
+				{
+					Console.Write($"Fügen Sie bitte die Daten für Plätze (1-FreiPlatz; 2-BelegtPlatz) {i}:");
+					Int32.TryParse(Console.ReadLine(), out k);
+					if (k == 1)
+					{
+						places[i] = false;
+						richtEing = true;
+					}
+					else if (k == 2)
+					{
+						places[i] = true;
+						richtEing = true;
+					}
+					else
+					{
+						richtEing = false;
+					}
+				} while (richtEing == false);
+			}
+		}
+
+		public static int FindFreePlace(bool[] places, bool isRotary,int neededPlace)
+		{
+			int counter = 0;
+			int klo;
+			//Linear
+			if (isRotary == false && counter != 1)// für Linear Magazine
+			{
+				int findplace = 0;
+				for (int i = 0; i < places.Length; i++)
+				{
+					if (places[i] == false)
+					{
+						findplace += 1;
+						if (findplace == neededPlace)
+						{
+							return i - neededPlace + 1; ;
+						}
+					}
+					else if (findplace != neededPlace && i == places.Length - 1)
+					{
+					  return -1;
+					}
+					else
+					{ findplace = 0; }
+				}
+			}
+
+			//Rotary
+			else if (isRotary == true )// für Rotary Magazine
+			{
+				int findplace = 0;
+				int incounter = 0;
+				for (int i = 0; i < places.Length; i++)
+				{
+					incounter++;
+					if (places[i] == false)
+					{
+						findplace += 1;
+						if (findplace == neededPlace)
+						{
+							klo = i - neededPlace + 1;
+							return klo;
+						}
+						else if (findplace != neededPlace && i == places.Length - 1)
+						{
+							for (i = 0; i < places.Length; i++)
+							{
+								if (places[i] == false)
+								{
+									findplace += 1;
+									if (findplace == neededPlace)
+									{
+										klo = places.Length + i + 1 - neededPlace;
+										return klo;
+									}
+								}
+								else
+								{
+									return -1;
+								}
+							}
+							break;
+						}
+					}
+					else if (places[i] == true)
+					{ findplace = 0; }
+				}
+				incounter++;
+				if (incounter < places.Length - 1)
+				{
+					return -1;
+				}
+				//return -1;
+			}
+			return -1;
+		}
+	}
+}
